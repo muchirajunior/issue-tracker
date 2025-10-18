@@ -19,6 +19,18 @@ export default function NewIssuePage(){
     const [error,setError] = useState('');
     const [isLoading, setLoading] = useState(false);
 
+    const onSubmit = handleSubmit( async(data)=>{
+        try {
+            setLoading(true);
+            await axios.post('/api/issues',data);
+            router.push('/issues');
+        } catch (error) {
+            setError('Some error occured... ')
+            setLoading(false);
+        }
+    }
+    );
+
     return (
         <div className="max-w-xl">
             { error &&  <Callout.Root  color="red" className="mb-3">
@@ -26,17 +38,7 @@ export default function NewIssuePage(){
             </Callout.Root>}
             <form 
                 className="space-y-3" 
-                onSubmit={handleSubmit( async(data)=>{
-                    try {
-                        setLoading(true);
-                        await axios.post('/api/issues',data);
-                        router.push('/issues');
-                    } catch (error) {
-                        setError('Some error occured... ')
-                        setLoading(false);
-                    }
-                }
-                )}>
+                onSubmit={onSubmit}>
                     <TextField.Root placeholder="Title" {...register('title')} >
                         <TextField.Slot />
                     </TextField.Root>
