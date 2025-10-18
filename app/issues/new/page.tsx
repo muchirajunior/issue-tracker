@@ -1,13 +1,20 @@
 'use client';
 
-import { Button,Callout,TextArea, TextField } from "@radix-ui/themes";
+import { issueSchema } from "@/app/validationSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button,Callout,Text,TextArea, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import z from "zod";
+
+type IssueForm = z.infer<typeof issueSchema>;
 
 export default function NewIssuePage(){
-    const {register,handleSubmit} = useForm();
+    const {register,handleSubmit, formState: {errors}} = useForm<IssueForm>({
+        resolver: zodResolver(issueSchema)
+    });
     const router = useRouter();
     const [error,setError] = useState('');
 
@@ -30,7 +37,9 @@ export default function NewIssuePage(){
                     <TextField.Root placeholder="Title" {...register('title')} >
                         <TextField.Slot />
                     </TextField.Root>
+                    {errors.title && <Text color="red" as ='p' >{errors.title.message}</Text>  }
                     <TextArea  placeholder="Description" {...register('description')}  />
+                     {errors.description && <Text color="red" as ='p' >{errors.description.message}</Text>  }
                     <Button className="w-full">Create New Issue</Button>
                 </form>
         </div>
