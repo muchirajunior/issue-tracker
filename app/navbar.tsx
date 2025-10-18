@@ -13,7 +13,7 @@ export default function NavBar(){
         { label: 'Issues', link:'/issues' }
     ];
     return(
-        <nav className="flex space-x-6 px-6 h-14 border-b border-gray-200 items-center">
+        <nav className="flex space-x-6 px-6 h-14 border-b border-gray-200 items-center mb-3">
             <Link href='/'> <AiFillBug /> </Link>
             <ul className="flex space-x-4">
                 {
