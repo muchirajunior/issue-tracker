@@ -16,7 +16,7 @@ A modern, full-stack issue-tracking application built with **Next.js**, **Tailwi
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)  
+- **Framework**: Next.js 15 (App Router)  
 - **Styling**: Tailwind CSS  
 - **UI Components**: Radix UI primitives  
 - **Validation**: Zod  
@@ -37,4 +37,3 @@ A modern, full-stack issue-tracking application built with **Next.js**, **Tailwi
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Project Structure
