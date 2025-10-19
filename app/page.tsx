@@ -1,7 +1,7 @@
 import prisma from "@/prisma/client";
-import { Badge, Button, DropdownMenu, Table } from "@radix-ui/themes";
+import { Badge, Button, Table } from "@radix-ui/themes";
 import Link from "next/link";
-import { MdBugReport, MdDelete, MdEdit } from "react-icons/md";
+import { MdBugReport } from "react-icons/md";
 import IssueUpdateActions from "./components/issue_update_action";
 
 export default async function Home() {
