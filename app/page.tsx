@@ -1,6 +1,55 @@
+import prisma from "@/prisma/client";
+import { Badge, Button, Table } from "@radix-ui/themes";
+import Link from "next/link";
+import { MdBugReport, MdDelete } from "react-icons/md";
 
-export default function Home() {
+export default async function Home() {
+  const data = await prisma.issue.findMany();
+  if(data.length == 0){
+    return (
+      <div className="item-center content-center text-gray"> No data </div>
+    );
+  }
   return (
-    <div>Hello muchira junior</div>
+    <div>
+      <span className="flex justify-between mb-3">
+        <h2 className="font-bold text-lg">Issues</h2>
+        <Button className="flex " > <MdBugReport /> <Link className = "" href='/issues/new'>  Create New Issue </Link> </Button>
+      </span>
+      <Table.Root className="border border-gray-200 rounded-lg">
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Task</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Description</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Created At</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Updated At</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
+
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
+          {
+            data.map((issue)=><Table.Row key={issue.id}>
+              <Table.RowHeaderCell>{issue.title}</Table.RowHeaderCell>
+              <Table.RowHeaderCell>{issue.description}</Table.RowHeaderCell>
+              <Table.RowHeaderCell>
+                <Badge 
+                color={issue.status == 'CLOSED'? 'green' : issue.status == 'OPEN' ? 'blue' : "orange"}
+                >{issue.status.replaceAll('_',' ')}</Badge>
+              </Table.RowHeaderCell>
+              <Table.RowHeaderCell>{issue.createdAt.toLocaleTimeString()}</Table.RowHeaderCell>
+              <Table.RowHeaderCell>{issue.updatedAt.toLocaleDateString()}</Table.RowHeaderCell>
+              <Table.RowHeaderCell>
+                <Button color="red">Delete <MdDelete /> </Button>
+              </Table.RowHeaderCell>
+            </Table.Row>)
+          }
+        
+        </Table.Body>
+      </Table.Root>
+
+    </div>
   );
 }

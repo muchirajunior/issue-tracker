@@ -23,7 +23,7 @@ export default function NewIssuePage(){
         try {
             setLoading(true);
             await axios.post('/api/issues',data);
-            router.push('/issues');
+            router.push('/');
         } catch (error) {
             setError('Some error occured... ')
             setLoading(false);
