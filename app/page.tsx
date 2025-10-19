@@ -1,7 +1,8 @@
 import prisma from "@/prisma/client";
-import { Badge, Button, Table } from "@radix-ui/themes";
+import { Badge, Button, DropdownMenu, Table } from "@radix-ui/themes";
 import Link from "next/link";
-import { MdBugReport, MdDelete } from "react-icons/md";
+import { MdBugReport, MdDelete, MdEdit } from "react-icons/md";
+import IssueUpdateActions from "./components/issue_update_action";
 
 export default async function Home() {
   const data = await prisma.issue.findMany();
@@ -39,10 +40,10 @@ export default async function Home() {
                 color={issue.status == 'CLOSED'? 'green' : issue.status == 'OPEN' ? 'blue' : "orange"}
                 >{issue.status.replaceAll('_',' ')}</Badge>
               </Table.RowHeaderCell>
-              <Table.RowHeaderCell>{issue.createdAt.toLocaleTimeString()}</Table.RowHeaderCell>
-              <Table.RowHeaderCell>{issue.updatedAt.toLocaleDateString()}</Table.RowHeaderCell>
-              <Table.RowHeaderCell>
-                <Button color="red">Delete <MdDelete /> </Button>
+              <Table.RowHeaderCell>{issue.createdAt.toLocaleString()}</Table.RowHeaderCell>
+              <Table.RowHeaderCell>{issue.updatedAt.toLocaleString()}</Table.RowHeaderCell>
+              <Table.RowHeaderCell className="space-x-3">
+                <IssueUpdateActions  issue={issue} />
               </Table.RowHeaderCell>
             </Table.Row>)
           }
